@@ -1,0 +1,15 @@
+C:\Users\AisinGioro\Desktop\PvPModifier-master\PvPModifier\bin\Release\PvPModifier.dll
+C:\Users\AisinGioro\Desktop\PvPModifier-master\PvPModifier\bin\Release\PvPModifier.pdb
+C:\Users\AisinGioro\Desktop\PvPModifier-master\PvPModifier\bin\Release\Mono.Data.Sqlite.dll
+C:\Users\AisinGioro\Desktop\PvPModifier-master\PvPModifier\bin\Release\MySql.Data.dll
+C:\Users\AisinGioro\Desktop\PvPModifier-master\PvPModifier\bin\Release\Newtonsoft.Json.dll
+C:\Users\AisinGioro\Desktop\PvPModifier-master\PvPModifier\bin\Release\OTAPI.dll
+C:\Users\AisinGioro\Desktop\PvPModifier-master\PvPModifier\bin\Release\TerrariaServer.exe
+C:\Users\AisinGioro\Desktop\PvPModifier-master\PvPModifier\bin\Release\TShockAPI.dll
+C:\Users\AisinGioro\Desktop\PvPModifier-master\PvPModifier\bin\Release\HttpServer.dll
+C:\Users\AisinGioro\Desktop\PvPModifier-master\PvPModifier\bin\Release\BCrypt.Net.dll
+C:\Users\AisinGioro\Desktop\PvPModifier-master\PvPModifier\obj\Release\PvPModifier.csprojAssemblyReference.cache
+C:\Users\AisinGioro\Desktop\PvPModifier-master\PvPModifier\obj\Release\PvPModifier.csproj.CoreCompileInputs.cache
+C:\Users\AisinGioro\Desktop\PvPModifier-master\PvPModifier\obj\Release\PvPModifier.csproj.CopyComplete
+C:\Users\AisinGioro\Desktop\PvPModifier-master\PvPModifier\obj\Release\PvPModifier.dll
+C:\Users\AisinGioro\Desktop\PvPModifier-master\PvPModifier\obj\Release\PvPModifier.pdb
