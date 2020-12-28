@@ -1,4 +1,5 @@
 ﻿namespace PvPModifier.Utilities.PvPConstants {
+
     /// <summary>
     /// Contains miscellaneous constants.
     /// </summary>

@@ -1,9 +1,10 @@
-﻿using System;
+﻿using PvPModifier.Variables;
+using System;
 using System.IO;
 using System.IO.Streams;
-using PvPModifier.Variables;
 
 namespace PvPModifier.Network.Packets {
+
     public class PlayerSlotArgs : EventArgs {
         public PvPPlayer Player;
         public byte SlotId;

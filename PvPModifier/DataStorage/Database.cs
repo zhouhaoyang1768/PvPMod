@@ -1,41 +1,36 @@
-﻿using System;
+﻿using Mono.Data.Sqlite;
+using MySql.Data.MySqlClient;
+using PvPModifier.Utilities;
+using PvPModifier.Utilities.PvPConstants;
+using PvPModifier.Variables;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Diagnostics;
 using System.IO;
-using Mono.Data.Sqlite;
-using MySql.Data.MySqlClient;
-using PvPModifier.Utilities;
-using PvPModifier.Utilities.PvPConstants;
-using PvPModifier.Variables;
 using Terraria;
 using TShockAPI;
 using TShockAPI.DB;
 
 namespace PvPModifier.DataStorage {
+
     public static class Database {
         public static bool IsMySql => db.GetSqlType() == SqlType.Mysql;
 
         public static IDbConnection db;
 
-
         /// <summary>
         /// Connects the mysql/sqlite database for the plugin, creating one if the database doesn't already exist.
         /// </summary>
         public static void ConnectDB() {
-            if (TShock.Config.StorageType.ToLower() == "sqlite")
-            {
+            if (TShock.Config.StorageType.ToLower() == "sqlite") {
                 db = new SqliteConnection(string.Format("uri=file://{0},Version=3",
                     Path.Combine(TShock.SavePath, "PvPModifier.sqlite")));
-            }
-            else if (TShock.Config.StorageType.ToLower() == "mysql")
-            {
-                try
-                {
+            } else if (TShock.Config.StorageType.ToLower() == "mysql") {
+                try {
                     var host = TShock.Config.MySqlHost.Split(':');
-                    db = new MySqlConnection
-                    {
+                    db = new MySqlConnection {
                         ConnectionString = string.Format("Server={0}; Port={1}; Database={2}; Uid={3}; Pwd={4}",
                             host[0],
                             host.Length == 1 ? "3306" : host[1],
@@ -43,14 +38,11 @@ namespace PvPModifier.DataStorage {
                             TShock.Config.MySqlUsername,
                             TShock.Config.MySqlPassword)
                     };
-                }
-                catch (MySqlException x)
-                {
+                } catch (MySqlException x) {
                     TShock.Log.Error(x.ToString());
                     throw new Exception("MySQL not setup correctly.");
                 }
-            }
-            else
+            } else
                 throw new Exception("Invalid storage type.");
 
             var sqlCreator = new SqlTableCreator(db,
@@ -59,7 +51,7 @@ namespace PvPModifier.DataStorage {
                     : new SqliteQueryCreator());
 
             sqlCreator.EnsureTableStructure(new SqlTable(DbTables.ItemTable,
-                new SqlColumn(DbConsts.ID, MySqlDbType.Int32) {Primary = true},
+                new SqlColumn(DbConsts.ID, MySqlDbType.Int32) { Primary = true },
                 new SqlColumn(DbConsts.Damage, MySqlDbType.Int32),
                 new SqlColumn(DbConsts.Knockback, MySqlDbType.Float),
                 new SqlColumn(DbConsts.UseAnimation, MySqlDbType.Int32),
@@ -75,7 +67,7 @@ namespace PvPModifier.DataStorage {
                 new SqlColumn(DbConsts.ReceiveBuffDuration, MySqlDbType.Int32)));
 
             sqlCreator.EnsureTableStructure(new SqlTable(DbTables.ProjectileTable,
-                new SqlColumn(DbConsts.ID, MySqlDbType.Int32) {Primary = true},
+                new SqlColumn(DbConsts.ID, MySqlDbType.Int32) { Primary = true },
                 new SqlColumn(DbConsts.Shoot, MySqlDbType.Int32),
                 new SqlColumn(DbConsts.VelocityMultiplier, MySqlDbType.Float),
                 new SqlColumn(DbConsts.Damage, MySqlDbType.Int32),
@@ -86,14 +78,14 @@ namespace PvPModifier.DataStorage {
                 new SqlColumn(DbConsts.ReceiveBuffID, MySqlDbType.Int32),
                 new SqlColumn(DbConsts.ReceiveBuffDuration, MySqlDbType.Int32)));
 
-           sqlCreator.EnsureTableStructure(new SqlTable(DbTables.BuffTable,
-                new SqlColumn(DbConsts.ID, MySqlDbType.Int32) { Primary = true },
-                new SqlColumn(DbConsts.InflictBuffID, MySqlDbType.Int32),
-                new SqlColumn(DbConsts.InflictBuffDuration, MySqlDbType.Int32),
-                new SqlColumn(DbConsts.ReceiveBuffID, MySqlDbType.Int32),
-                new SqlColumn(DbConsts.ReceiveBuffDuration, MySqlDbType.Int32)));
+            sqlCreator.EnsureTableStructure(new SqlTable(DbTables.BuffTable,
+                 new SqlColumn(DbConsts.ID, MySqlDbType.Int32) { Primary = true },
+                 new SqlColumn(DbConsts.InflictBuffID, MySqlDbType.Int32),
+                 new SqlColumn(DbConsts.InflictBuffDuration, MySqlDbType.Int32),
+                 new SqlColumn(DbConsts.ReceiveBuffID, MySqlDbType.Int32),
+                 new SqlColumn(DbConsts.ReceiveBuffDuration, MySqlDbType.Int32)));
         }
-        
+
         /// <summary>
         /// Returns data from the SQL database from a given SQL query.
         /// </summary>
@@ -121,7 +113,7 @@ namespace PvPModifier.DataStorage {
                 TShock.Log.Write(e.ToString(), TraceLevel.Error);
                 success = false;
             }
-            
+
             db.Close();
             return success;
         }
@@ -214,7 +206,7 @@ namespace PvPModifier.DataStorage {
                 case "Items":
                     Item item = new Item();
                     item.SetDefaults(id);
-                    
+
                     float knockback = item.knockBack;
                     bool notAmmo = item.notAmmo;
 

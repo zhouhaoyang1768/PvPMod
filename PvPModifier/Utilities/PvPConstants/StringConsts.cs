@@ -1,4 +1,5 @@
 ﻿namespace PvPModifier.Utilities.PvPConstants {
+
     public static class StringConsts {
         public const string Config = "Config";
         public const string Database = "Database";
@@ -252,7 +253,7 @@
                 case "thm":
                     attribute = ConfigConsts.ThornMultiplier;
                     return true;
-                    
+
                 case "iframetime":
                 case "iframe":
                 case "ift":

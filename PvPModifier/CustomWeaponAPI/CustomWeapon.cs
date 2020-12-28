@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 
 namespace PvPModifier.CustomWeaponAPI {
+
     /// <summary>
     /// Made by Rofle(popstarfreas) from DarkGaming
     /// </summary>
@@ -26,7 +27,7 @@ namespace PvPModifier.CustomWeaponAPI {
             Prefix = weapon.Prefix;
             ItemNetId = weapon.ItemNetId;
             if (weapon.Color != null) {
-                Color = new Color(((Color) weapon.Color).R, ((Color) weapon.Color).G, ((Color) weapon.Color).B);
+                Color = new Color(((Color)weapon.Color).R, ((Color)weapon.Color).G, ((Color)weapon.Color).B);
             }
 
             Stack = weapon.Stack;
@@ -40,8 +41,8 @@ namespace PvPModifier.CustomWeaponAPI {
             AmmoIdentifier = weapon.AmmoIdentifier;
             UseAmmoIdentifier = weapon.UseAmmoIdentifier;
             NotAmmo = weapon.NotAmmo;
-            DropAreaHeight = weapon.DropAreaHeight; 
-            DropAreaWidth = weapon.DropAreaHeight; 
+            DropAreaHeight = weapon.DropAreaHeight;
+            DropAreaWidth = weapon.DropAreaHeight;
         }
 
         public override bool Equals(object obj) {
@@ -55,6 +56,7 @@ namespace PvPModifier.CustomWeaponAPI {
             return ItemNetId == other.ItemNetId;
         }
 
-        public CustomWeapon() { }
+        public CustomWeapon() {
+        }
     }
 }

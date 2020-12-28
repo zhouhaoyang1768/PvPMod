@@ -2,6 +2,7 @@
 using PvPModifier.Variables;
 
 namespace PvPModifier.DataStorage {
+
     public class DbProjectile : DbObject {
         public override string Section => DbTables.ProjectileTable;
 

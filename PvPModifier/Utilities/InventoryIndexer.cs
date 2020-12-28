@@ -1,4 +1,5 @@
 ﻿namespace PvPModifier.Utilities {
+
     /// <summary>
     /// Helper class that cycles through the indexes of a <see cref="Terraria.Player"/>'s inventory.
     /// Terraria has a special pickup order, which goes from 0 - 9, 54 - 57, 49 - 10.
@@ -12,7 +13,7 @@
         private int _maxIndexPos;
         private int _maxIndex;
         private int _index;
-        bool _isAscending = true;
+        private bool _isAscending = true;
 
         public InventoryIndexer() {
             _index = -1;

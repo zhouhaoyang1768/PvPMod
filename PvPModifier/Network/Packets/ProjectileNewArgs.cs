@@ -1,15 +1,15 @@
-﻿using System;
-using System.IO;
-using System.IO.Streams;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using PvPModifier.Utilities;
 using PvPModifier.Variables;
+using System;
+using System.IO;
+using System.IO.Streams;
 using Terraria;
 using TerrariaApi.Server;
 
 namespace PvPModifier.Network.Packets {
+
     public class ProjectileNewArgs : EventArgs {
-        
         public GetDataEventArgs Args;
         public PvPPlayer Attacker;
         public PvPItem Weapon;
@@ -31,10 +31,8 @@ namespace PvPModifier.Network.Packets {
             arg = null;
             if (PresetData.ProjectileDummy.Contains(Type)) return false;
 
-            try
-            {
-                arg = new ProjectileNewArgs
-                {
+            try {
+                arg = new ProjectileNewArgs {
                     Args = args,
                     Attacker = attacker,
 
@@ -55,8 +53,7 @@ namespace PvPModifier.Network.Packets {
                     Proj = new PvPProjectile(Type, Identity),
                     Weapon = ProjectileUtils.GetProjectileWeapon(attacker, Type)
                 };
-            } catch (EndOfStreamException)
-            {
+            } catch (EndOfStreamException) {
                 return false;
             }
 

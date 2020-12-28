@@ -2,7 +2,9 @@
 using Terraria;
 
 namespace PvPModifier.Variables {
+
     public class PvPItem : Item {
+
         public PvPItem() {
             SetDefaults();
         }

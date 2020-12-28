@@ -1,16 +1,18 @@
-﻿using System;
-using PvPModifier.CustomWeaponAPI;
+﻿using PvPModifier.CustomWeaponAPI;
 using PvPModifier.DataStorage;
 using PvPModifier.Network.Packets;
 using PvPModifier.Utilities;
 using PvPModifier.Utilities.PvPConstants;
 using PvPModifier.Variables;
+using System;
 using Terraria;
 using TerrariaApi.Server;
 using TShockAPI;
 
 namespace PvPModifier.Network {
+
     public class PvPEvents {
+
         public PvPEvents() {
             DataHandler.PlayerHurt += OnPlayerHurt;
             DataHandler.ProjectileNew += OnNewProjectile;
@@ -44,16 +46,16 @@ namespace PvPModifier.Network {
         /// </summary>
         public static void UpdateProjectileHoming(ProjectileAiUpdateEventArgs args) {
             if (!PvPModifier.Config.EnableHoming) return;
-            
+
             var projectile = args.Projectile;
 
             float homingRadius = Cache.Projectiles[projectile.type].HomingRadius;
             if (homingRadius < 0) return;
 
             float angularVelocity = Cache.Projectiles[projectile.type].AngularVelocity;
-            
+
             PvPPlayer target = PvPUtils.FindClosestPlayer(projectile.position, projectile.owner, homingRadius * Constants.PixelToWorld);
-            
+
             if (target != null) {
                 projectile.velocity = MiscUtils.TurnTowards(projectile.velocity, projectile.position, target.TPlayer.Center, angularVelocity);
                 foreach (var pvper in PvPModifier.ActivePlayers) {
@@ -83,9 +85,7 @@ namespace PvPModifier.Network {
             //TSPlayer.All.SendMessage(e.Player.Name + " has enabled/disabled pvp (fix 1)", new Microsoft.Xna.Framework.Color(187, 144, 212));
             if (!PvPModifier.Config.EnablePlugin) return;
 
-            if (e.Hostile)
-            {
-               
+            if (e.Hostile) {
                 e.Player.InvTracker.StartForcePvPInventoryCheck = true;
                 PvPUtils.SendCustomItems(e.Player);
             }
@@ -113,7 +113,7 @@ namespace PvPModifier.Network {
                 //If the item is being consumed, don't modify the item
                 if (Math.Abs(e.Player.TPlayer.inventory[e.SlotId].stack - e.Stack) <= 1
                     && e.Player.TPlayer.inventory[e.SlotId].netID == e.NetID) return;
-                
+
                 //If the item is modified, fill empty spaces and add it to queue
                 if (PvPUtils.IsModifiedItem(e.NetID)) {
                     SSCUtils.FillInventoryToIndex(e.Player, Constants.EmptyItem, Constants.JunkItem, e.SlotId);
@@ -162,7 +162,7 @@ namespace PvPModifier.Network {
                 e.Player.InvTracker.Clear();
                 e.Player.InvTracker.StartForcePvPInventoryCheck = false;
             }
-            
+
             //If the player tries to use a modified item in their hand, it will be dumped back into their inventory
             if ((e.PlayerAction & 32) == 32) {
                 if (e.Player.TPlayer.hostile) {
@@ -187,11 +187,11 @@ namespace PvPModifier.Network {
             if (!PvPModifier.Config.EnablePlugin) return;
             var projectile = Main.projectile[e.Identity];
             if (projectile.active && projectile.type == e.Type) return;
-            
+
             if ((TShock.Players[e.Owner]?.TPlayer?.hostile ?? false) && PvPUtils.IsModifiedProjectile(e.Type)) {
                 e.Args.Handled = true;
                 DbProjectile proj = Cache.Projectiles[e.Type];
-                
+
                 projectile.SetDefaults(proj.Shoot != -1 ? proj.Shoot : e.Type);
                 projectile.velocity = e.Velocity * proj.VelocityMultiplier;
                 projectile.damage = proj.Damage != -1 ? proj.Damage : e.Damage;
@@ -202,7 +202,7 @@ namespace PvPModifier.Network {
 
                 NetMessage.SendData(27, -1, -1, null, e.Identity);
             }
-            
+
             e.Attacker.ProjTracker.InsertProjectile(e.Identity, e.Type, e.Owner, e.Weapon);
             e.Attacker.ProjTracker.Projectiles[e.Type].PerformProjectileAction();
         }
@@ -224,7 +224,7 @@ namespace PvPModifier.Network {
                     e.Target.IsLeftFrom(e.Attacker.TPlayer.position) ? -direction : direction);
                 e.HitDirection = 0;
             }
-            
+
             e.Target.DamagePlayer(PvPUtils.GetPvPDeathMessage(e.PlayerHitReason.GetDeathText(e.Target.Name).ToString(), e.Weapon, e.Projectile),
                 e.Weapon, e.InflictedDamage, e.HitDirection, (e.Flag & 1) == 1);
 

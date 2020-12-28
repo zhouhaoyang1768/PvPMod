@@ -1,4 +1,5 @@
 ﻿namespace PvPModifier.Utilities.PvPConstants {
+
     /// <summary>
     /// Contains variable names of database objects into strings
     /// </summary>

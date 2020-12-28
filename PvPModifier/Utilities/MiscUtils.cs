@@ -1,14 +1,16 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using PvPModifier.Utilities.PvPConstants;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Microsoft.Xna.Framework;
-using PvPModifier.Utilities.PvPConstants;
 using Terraria;
 using Utils = TShockAPI.Utils;
 
 namespace PvPModifier.Utilities {
+
     public static class MiscUtils {
+
         /// <summary>
         /// Attempts to sanitize any ' characters in a string to '' for sql queries.
         /// </summary>
@@ -136,7 +138,7 @@ namespace PvPModifier.Utilities {
             T[][] split = new T[input.Length / 2][];
 
             for (int x = 0; x < input.Length / 2; x++) {
-                split[x] = new [] { input[x * 2] , input[x * 2 + 1] };
+                split[x] = new[] { input[x * 2], input[x * 2 + 1] };
             }
 
             return split;
@@ -150,11 +152,11 @@ namespace PvPModifier.Utilities {
             Vector2 direction = target - pos;
             direction.Normalize();
             vel.Normalize();
-                
+
             //Cross product (if both vectors are converted to Vector3 where Z = 0), or determinant of 2 vectors
             double rotateAmount = vel.X * direction.Y - vel.Y * direction.X;
             rotateAmount *= angularVelocity;
-            
+
             return Rotate(vel * speed, (float)rotateAmount);
         }
 

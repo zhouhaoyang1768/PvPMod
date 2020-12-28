@@ -1,7 +1,8 @@
-﻿using System.Text;
-using System.IO;
+﻿using System.IO;
+using System.Text;
 
 namespace PvPModifier.CustomWeaponAPI {
+
     /// <summary>
     /// Made by Rofle(popstarfreas) from DarkGaming
     /// </summary>
@@ -71,7 +72,7 @@ namespace PvPModifier.CustomWeaponAPI {
         private void UpdateLength() {
             long currentPosition = writer.BaseStream.Position;
             writer.BaseStream.Position = 0L;
-            writer.Write((short) currentPosition);
+            writer.Write((short)currentPosition);
             writer.BaseStream.Position = currentPosition;
         }
 

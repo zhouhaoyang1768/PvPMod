@@ -1,22 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using PvPModifier.DataStorage;
 using PvPModifier.Utilities;
 using PvPModifier.Utilities.PvPConstants;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using TShockAPI;
 
 namespace PvPModifier {
+
     public class PluginCommands {
         private static string InvalidSyntax = "Invalid Syntax. ";
 
         private static string AttributesHelp = "Type /modpvp help [database/config] to get a list of attributes";
+
         private static string HelpModPvP = InvalidSyntax +
                                            "/modpvp [item/projectile/buff] [ID/name] [attribute] [value]\n" +
                                            "or /modpvp config [config value] [value]\n" +
                                            AttributesHelp;
+
         private const string ResetList = "Parameters: [config/database/item/projectile/buff]";
 
         private static string NothingFoundError = InvalidSyntax + "Failed to find something with the given ID or Name.";
@@ -26,6 +29,7 @@ namespace PvPModifier {
         private static string ConfigAttributes = string.Join(", ", MiscUtils.GetConstants(typeof(ConfigConsts)));
 
         private static string InvalidValue(string attribute, string section) => attribute + " does not exist for " + section;
+
         private static string ConfigValueFail(string attribute, string value) => "Failed to set " + value + " to " + attribute;
 
         private static string InvalidCheckStat = InvalidSyntax + "/checkstat [item/projectile/buff] [id/name]";
@@ -47,7 +51,7 @@ namespace PvPModifier {
             Console.WriteLine("MaxAI: " + Terraria.Projectile.maxAI);
             args.Player.SendErrorMessage("" + Terraria.Projectile.maxAI);
 
-           var player = args.Player;
+            var player = args.Player;
             var input = args.Parameters;
 
             if (input.Count < 1 || !StringConsts.TryGetSectionFromString(input[0], out var section)) {
@@ -73,23 +77,19 @@ namespace PvPModifier {
                 case DbTables.ItemTable:
                 case DbTables.ProjectileTable:
                 case DbTables.BuffTable:
-                    if (input.Count < 2)
-                    {
+                    if (input.Count < 2) {
                         player.SendErrorMessage("Please provide a valid id or name.");
                         return;
                     }
-                    if (!int.TryParse(input[1], out int id))
-                    {
+                    if (!int.TryParse(input[1], out int id)) {
                         var foundList = TShock.Utils.GetIdFromInput(section, input[1]);
                         id = foundList[0];
-                        if (foundList.Count == 0)
-                        {
+                        if (foundList.Count == 0) {
                             player.SendErrorMessage("Please provide a valid id or name.");
                             return;
                         }
 
-                        if (foundList.Count > 1)
-                        {
+                        if (foundList.Count > 1) {
                             player.SendErrorMessage("Found multiple of input");
                             foreach (int items in foundList) {
                                 player.SendMessage($"({items}) {MiscUtils.GetNameFromInput(section, items)}", Color.Yellow);
@@ -105,7 +105,6 @@ namespace PvPModifier {
                         id = foundList[0];
                     }
                     */
-                    
 
                     Database.DeleteRow(section, id);
                     Database.Query(Database.GetDefaultValueSqlString(section, id));
@@ -157,18 +156,21 @@ namespace PvPModifier {
                         player.SendMessage(ScrollUp + "\n" + NegativeExplanation, Color.Yellow);
                     }
                     return;
+
                 case DbTables.ProjectileTable:
                     if (id > 0 && id < Terraria.Main.maxProjectileTypes) {
                         player.SendMessage(Cache.Projectiles[id].ToString(), Color.YellowGreen);
                         player.SendMessage(ScrollUp + "\n" + NegativeExplanation, Color.Yellow);
                     }
                     return;
+
                 case DbTables.BuffTable:
                     if (id > 0 && id < Terraria.Main.maxBuffTypes) {
                         player.SendMessage(Cache.Buffs[id].ToString(), Color.YellowGreen);
                         player.SendMessage(ScrollUp + "\n" + NegativeExplanation, Color.Yellow);
                     }
                     return;
+
                 case StringConsts.Config:
                     player.SendErrorMessage(InvalidCheckStat);
                     return;
@@ -196,9 +198,11 @@ namespace PvPModifier {
                         case StringConsts.Database:
                             player.SendMessage(DatabaseAttributes, Color.Yellow);
                             return;
+
                         case StringConsts.Config:
                             player.SendMessage(ConfigAttributes, Color.Yellow);
                             return;
+
                         default:
                             player.SendErrorMessage(InvalidSyntax + AttributesHelp);
                             return;

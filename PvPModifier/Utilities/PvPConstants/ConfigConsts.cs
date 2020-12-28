@@ -1,4 +1,5 @@
 ﻿namespace PvPModifier.Utilities.PvPConstants {
+
     /// <summary>
     /// Contains variable names of the <see cref="Config"/> into strings.
     /// </summary>
@@ -7,7 +8,7 @@
 
         public const string IframeTime = "IframeTime";
         public const string EnableKnockback = "EnableKnockback";
-        
+
         public const string EnableHoming = "EnableHoming";
 
         public const string EnableSpectreMask = "EnableSpectreMask";

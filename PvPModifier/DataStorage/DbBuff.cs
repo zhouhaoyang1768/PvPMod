@@ -2,6 +2,7 @@
 using PvPModifier.Variables;
 
 namespace PvPModifier.DataStorage {
+
     public class DbBuff : DbObject {
         public override string Section => DbTables.BuffTable;
 

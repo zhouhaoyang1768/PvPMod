@@ -2,6 +2,7 @@
 using PvPModifier.Variables;
 
 namespace PvPModifier.DataStorage {
+
     public class DbItem : DbObject {
         public override string Section => DbTables.ItemTable;
 

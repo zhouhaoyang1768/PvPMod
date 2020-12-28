@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
-using PvPModifier.Variables;
+﻿using PvPModifier.Variables;
+using System.Collections.Generic;
 
 namespace PvPModifier.Utilities {
-    class PresetData {
+
+    internal class PresetData {
+
         //List of all projectile IDs that are projectiles of its weapons
         //Ex. Phantom Phoenix spawns in a projectile of itself to show the animation of shooting
         public static List<int> ProjectileDummy = new List<int> {
@@ -23,16 +25,16 @@ namespace PvPModifier.Utilities {
 
             //Weapon Imbue Fire
             { 74, new BuffInfo(24, 150) },
-                            
+
             //Weapon Imbue Gold
             { 75,  new BuffInfo(72, 300) },
-                         
+
             //Weapon Imbue Ichor
             { 76, new BuffInfo(69, 300) },
-                       
+
             //Weapon Imbue Nanites
             { 77, new BuffInfo(31, 90) },
-                    
+
             //Weapon Imbue Poison
             { 79, new BuffInfo(20, 300) },
         };

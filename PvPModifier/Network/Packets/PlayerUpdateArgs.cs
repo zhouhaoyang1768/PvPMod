@@ -1,8 +1,9 @@
-﻿using System;
+﻿using PvPModifier.Variables;
+using System;
 using System.IO;
-using PvPModifier.Variables;
 
 namespace PvPModifier.Network.Packets {
+
     public class PlayerUpdateArgs : EventArgs {
         public PvPPlayer Player { get; set; }
 

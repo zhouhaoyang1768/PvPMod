@@ -3,10 +3,12 @@ using Terraria;
 using TShockAPI;
 
 namespace PvPModifier.Utilities {
+
     /// <summary>
     /// Contains helper methods that help run anything that requires Server Side Characters to be enabled.
     /// </summary>
     public class SSCUtils {
+
         /// <summary>
         /// Replaces every instance of an item that matches the target item id with an item
         /// that matches the replacement item id.

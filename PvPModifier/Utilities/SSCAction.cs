@@ -2,10 +2,12 @@
 using TShockAPI;
 
 namespace PvPModifier.Utilities {
+
     /// <summary>
     /// Allows a piece of code to be ran while temporarily turning on Server Side Characters.
     /// </summary>
-    class SSCAction {
+    internal class SSCAction {
+
         public delegate void Action();
 
         public SSCAction(TSPlayer player, Action action) {

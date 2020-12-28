@@ -1,6 +1,7 @@
 ﻿using PvPModifier.Utilities.PvPConstants;
 
 namespace PvPModifier.DataStorage {
+
     /// <summary>
     /// Stores the current values of Items, Projectiles, and Buffs retrieved from
     /// the SQL database and stores it in this object.
@@ -22,10 +23,12 @@ namespace PvPModifier.DataStorage {
                     if (id >= 0 && id <= Terraria.Main.maxItemTypes)
                         return Items[id];
                     break;
+
                 case DbTables.ProjectileTable:
                     if (id >= 0 && id <= Terraria.Main.maxProjectileTypes)
                         return Projectiles[id];
                     break;
+
                 case DbTables.BuffTable:
                     if (id >= 0 && id <= Terraria.Main.maxBuffTypes)
                         return Buffs[id];

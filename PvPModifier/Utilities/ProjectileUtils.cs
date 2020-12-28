@@ -2,7 +2,9 @@
 using Terraria;
 
 namespace PvPModifier.Utilities {
+
     public class ProjectileUtils {
+
         /// <summary>
         /// Gets the weapon of a projectile.
         /// For certain projectiles, it will pull from a list of

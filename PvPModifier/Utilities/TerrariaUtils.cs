@@ -1,14 +1,15 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using PvPModifier.Variables;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 
 namespace PvPModifier.Utilities {
+
     /// <summary>
     /// Methods ripped off Terraria's source code to be emulated in the plugin.
     /// </summary>
-    class TerrariaUtils {
+    internal class TerrariaUtils {
 
         /// <summary>
         /// Calculates the amount of damage dealt to a player after factoring in their defense stats.
@@ -155,13 +156,13 @@ namespace PvPModifier.Utilities {
                 damage = 0.8f;
             else if (prefix == 51)
                 damage = 1.05f;
-            
+
             return damage;
         }
 
         /// <summary>
         /// Spawns Counterweights/Additional yoyos when a person has hit with one.
-        /// This normally does not work in vanilla servers, so this must be emulated on a 
+        /// This normally does not work in vanilla servers, so this must be emulated on a
         /// server for accessories such as Yoyo Bag to work.
         /// </summary>
         public static void ActivateYoyoBag(PvPPlayer attacker, PvPPlayer target, int dmg, float kb) {
@@ -196,7 +197,7 @@ namespace PvPModifier.Utilities {
                 Vector2 vector22 = Vector2.Multiply(vector21, 16f);
                 float knockBack = (float)((kb + 6.0) / 2.0);
                 ProjectileUtils.SpawnProjectile(attacker, attacker.TPlayer.Center.X, attacker.TPlayer.Center.Y,
-                    vector22.X, vector22.Y, attacker.TPlayer.counterWeight, (int) (dmg * 0.8), knockBack,
+                    vector22.X, vector22.Y, attacker.TPlayer.counterWeight, (int)(dmg * 0.8), knockBack,
                     attacker.TPlayer.whoAmI, (num2 > 0).ToInt());
             }
         }

@@ -1,18 +1,18 @@
-﻿using System;
+﻿using PvPModifier.DataStorage;
+using PvPModifier.Network;
+using PvPModifier.Variables;
+using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using PvPModifier.DataStorage;
-using PvPModifier.Network;
-using PvPModifier.Variables;
 using Terraria;
 using TerrariaApi.Server;
 using TShockAPI.Hooks;
 
 namespace PvPModifier {
+
     [ApiVersion(2, 1)]
     public class PvPModifier : TerrariaPlugin {
-
         public static Config Config;
         public static PvPPlayer[] PvPers = new PvPPlayer[Main.maxPlayers];
         private readonly PvPEvents _pvpevents = new PvPEvents();
@@ -24,7 +24,8 @@ namespace PvPModifier {
 
         public static PvPPlayer[] ActivePlayers => PvPers.Where(c => c != null).ToArray();
 
-        public PvPModifier(Main game) : base(game) { }
+        public PvPModifier(Main game) : base(game) {
+        }
 
         public override void Initialize() {
             Config = Config.Read(Config.ConfigPath);
@@ -97,7 +98,7 @@ namespace PvPModifier {
         }
 
         /// <summary>
-        /// Sets default config values if a config doesn't exist 
+        /// Sets default config values if a config doesn't exist
         /// after the server has loaded the game.
         /// Also loads the database.
         /// </summary>
@@ -112,7 +113,7 @@ namespace PvPModifier {
         /// <summary>
         /// Processes data so it can be used in <see cref="Network.PvPEvents"/>.
         /// </summary>
-        /// <param name="args">The data needed to be processed.</param> 
+        /// <param name="args">The data needed to be processed.</param>
         private void GetData(GetDataEventArgs args) {
             MemoryStream data = new MemoryStream(args.Msg.readBuffer, args.Index, args.Length);
             PvPPlayer attacker = PvPers[args.Msg.whoAmI];

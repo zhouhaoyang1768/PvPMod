@@ -1,24 +1,26 @@
-﻿using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using PvPModifier.CustomWeaponAPI;
 using PvPModifier.DataStorage;
 using PvPModifier.Utilities.PvPConstants;
 using PvPModifier.Variables;
+using System;
+using System.Collections.Generic;
 using Terraria;
 using TShockAPI;
-using System;
 
 namespace PvPModifier.Utilities {
+
     public class PvPUtils {
+
         /// <summary>
         /// Generates a death message for a person based off the weapon and type of death.
         /// </summary>
         /// <param name="type">1 for normal hits, 2 for reflection hits such as thorns and turtle.</param>
         public static string GetPvPDeathMessage(string deathMessage, PvPItem weapon, PvPProjectile proj = null, int type = 1) {
             string tag = "";
-            if (type == 1) tag = weapon?.netID != 0 || proj?.ItemOriginated?.netID != 0 ? 
-                "[i/p{0}:{1}] ".SFormat(proj?.ItemOriginated?.prefix ?? weapon?.prefix, 
-                                        proj?.ItemOriginated?.netID ?? weapon?.netID) 
+            if (type == 1) tag = weapon?.netID != 0 || proj?.ItemOriginated?.netID != 0 ?
+                "[i/p{0}:{1}] ".SFormat(proj?.ItemOriginated?.prefix ?? weapon?.prefix,
+                                        proj?.ItemOriginated?.netID ?? weapon?.netID)
                 : "";
             else if (type == 2) tag = "[i:1150] ";
 
@@ -38,12 +40,12 @@ namespace PvPModifier.Utilities {
             RefreshInventory(player);
             List<int> itemIndex = new List<int>();
             InventoryIndexer indexer = new InventoryIndexer();
-            
+
             for (byte loop = 0; loop < indexer.MaxInventoryCycle; loop++) {
                 int index = indexer.NextIndex();
 
                 Item item = player.TPlayer.inventory[index];
-                
+
                 var custwep = GetCustomWeapon(player, item.type, item.prefix, (short)item.stack);
                 if (IsModifiedItem(custwep.ItemNetId)) {
                     indexer.StoreMaxIndex(index);
@@ -51,7 +53,7 @@ namespace PvPModifier.Utilities {
                     player.InvTracker.AddItem(custwep);
                 }
             }
-            
+
             if (itemIndex.Count != 0) {
                 SSCUtils.FillInventoryToIndex(player, Constants.EmptyItem, Constants.JunkItem, indexer.MaxIndex);
                 foreach (int num in itemIndex)
@@ -118,11 +120,9 @@ namespace PvPModifier.Utilities {
         public static bool IsModifiedItem(int type) {
             DbItem dbitem;
 
-            try
-            {
+            try {
                 dbitem = Cache.Items[type];
-            } catch (IndexOutOfRangeException)
-            {
+            } catch (IndexOutOfRangeException) {
                 return true;
             }
             Item item = new Item();
@@ -169,7 +169,7 @@ namespace PvPModifier.Utilities {
 
                 var distance = Vector2.Distance(position, pvper.TPlayer.Center);
 
-                if (pvper.Index != selfIndex && (distance < closestPersonDistance || closestPersonDistance == -1) 
+                if (pvper.Index != selfIndex && (distance < closestPersonDistance || closestPersonDistance == -1)
                                              && (distance < radius || radius == -1)) {
                     closestPersonDistance = distance;
                     target = pvper;

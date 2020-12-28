@@ -1,21 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using PvPModifier.CustomWeaponAPI;
 using PvPModifier.DataStorage;
 using PvPModifier.Utilities;
+using PvPModifier.Utilities.PvPConstants;
+using System;
+using System.Collections.Generic;
+using System.Timers;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Localization;
 using TShockAPI;
-using System.Timers;
-using PvPModifier.Utilities.PvPConstants;
 
 namespace PvPModifier.Variables {
-    public class PvPPlayer : TSPlayer {
 
-        DateTime _lastHit;
-        DateTime _lastInventoryModified;
+    public class PvPPlayer : TSPlayer {
+        private DateTime _lastHit;
+        private DateTime _lastInventoryModified;
         public ProjectileTracker ProjTracker = new ProjectileTracker();
         public InventoryTracker InvTracker;
         public PvPPlayer LastHitBy = null;
@@ -52,13 +52,13 @@ namespace PvPModifier.Variables {
         /// Gets the angle that a target is from the player in radians.
         /// </summary>
         public double AngleFrom(Vector2 target) => Math.Atan2(target.Y - this.Y, target.X - this.X);
-        
+
         /// <summary>
         /// Checks whether a target is left from a player
         /// </summary>
         /// <returns>Returns true if the target is left of the player</returns>
         public bool IsLeftFrom(Vector2 target) => target.X > this.X;
-        
+
         /// <summary>
         /// Damages players. Criticals and custom knockback will apply if enabled.
         /// </summary>
@@ -69,7 +69,7 @@ namespace PvPModifier.Variables {
 
         /// <summary>
         /// Sets a velocity to a player, emulating directional knockback.
-        /// 
+        ///
         /// This method requires SSC to be enabled. To allow knockback to work
         /// on non-SSC servers, the method will temporarily enable SSC to set player
         /// velocity.
@@ -88,7 +88,7 @@ namespace PvPModifier.Variables {
                             TPlayer.velocity.Y = (float)(knockback * Math.Sin(angle));
                         }
                     }
-                    
+
                     NetMessage.SendData(13, -1, -1, null, Index, 0, 4);
                 }
             });
@@ -126,7 +126,7 @@ namespace PvPModifier.Variables {
 
                 NetMessage.SendPlayerHurt(this.Index, PlayerDeathReason.ByCustomReason(PvPUtils.GetPvPDeathMessage(deathmessage, reflectTag, type: 2)),
                     thornDamage, 0, false, true, 5);
-            } 
+            }
         }
 
         /// <summary>
@@ -145,8 +145,8 @@ namespace PvPModifier.Variables {
                 var itemDrop = new PacketWriter()
                     .SetType((int)PacketTypes.UpdateItemDrop)
                     .PackInt16((short)index)
-                    .PackSingle(target.TPlayer.position.X) 
-                    .PackSingle(target.TPlayer.position.Y) 
+                    .PackSingle(target.TPlayer.position.X)
+                    .PackSingle(target.TPlayer.position.Y)
                     .PackSingle(velocityX)
                     .PackSingle(velocityY)
                     .PackInt16(1)
@@ -179,7 +179,7 @@ namespace PvPModifier.Variables {
         /// Applies buffs to the attacker based off own buffs, if any.
         /// </summary>
         public void ApplyBuffDebuffs(PvPPlayer attacker, PvPItem weapon) {
-            for(int x = 0; x < Terraria.Player.maxBuffs; x++) {
+            for (int x = 0; x < Terraria.Player.maxBuffs; x++) {
                 int buffType = attacker.TPlayer.buffType[x];
                 if (PresetData.FlaskDebuffs.ContainsKey(buffType)) {
                     if (weapon.melee) {
@@ -229,7 +229,7 @@ namespace PvPModifier.Variables {
         /// Sets a buff to the player based off <see cref="BuffInfo"/>
         /// </summary>
         public void SetBuff(BuffInfo buffInfo) => SetBuff(buffInfo.BuffId, buffInfo.BuffDuration);
-        
+
         /// <summary>
         /// Determines whether a person can be hit with Medusa Head.
         /// A normal Medusa attack hits six times at once, so this method
@@ -246,8 +246,9 @@ namespace PvPModifier.Variables {
             return true;
         }
 
-        public static bool operator == (PvPPlayer obj1, PvPPlayer obj2) => obj1?.Index == obj2?.Index;
-        public static bool operator != (PvPPlayer obj1, PvPPlayer obj2) => obj1?.Index != obj2?.Index;
+        public static bool operator ==(PvPPlayer obj1, PvPPlayer obj2) => obj1?.Index == obj2?.Index;
+
+        public static bool operator !=(PvPPlayer obj1, PvPPlayer obj2) => obj1?.Index != obj2?.Index;
     }
 
     /// <summary>
@@ -277,7 +278,7 @@ namespace PvPModifier.Variables {
 
         private readonly Timer _timer;
         private int _counter;
-        
+
         public bool LockModifications;
         public bool OnPvPInventoryChecked;
         public bool StartForcePvPInventoryCheck;
@@ -312,7 +313,7 @@ namespace PvPModifier.Variables {
         }
 
         public bool CheckItem(short id) {
-            _inv.Remove(new CustomWeapon {ItemNetId = id});
+            _inv.Remove(new CustomWeapon { ItemNetId = id });
 
             if (_inv.Count == 0 && LockModifications) {
                 LockModifications = false;

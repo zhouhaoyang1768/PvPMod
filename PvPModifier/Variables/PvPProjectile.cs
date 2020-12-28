@@ -4,12 +4,12 @@ using PvPModifier.Utilities.PvPConstants;
 using Terraria;
 
 namespace PvPModifier.Variables {
+
     /// <summary>
     /// The class used to store projectile data. Includes additional methods and variables to
     /// perform pvp based calculations and actions.
     /// </summary>
     public class PvPProjectile : Projectile {
-
         public PvPItem ItemOriginated;
         public PvPPlayer OwnerProjectile;
 

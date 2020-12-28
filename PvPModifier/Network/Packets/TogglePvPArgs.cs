@@ -1,7 +1,8 @@
-﻿using System;
-using PvPModifier.Variables;
+﻿using PvPModifier.Variables;
+using System;
 
 namespace PvPModifier.Network.Packets {
+
     public class TogglePvPArgs : EventArgs {
         public PvPPlayer Player;
         public bool Hostile;

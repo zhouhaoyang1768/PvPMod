@@ -3,6 +3,7 @@ using System.IO;
 using TShockAPI;
 
 namespace PvPModifier {
+
     public class Config {
         public static string ConfigPath = Path.Combine(TShock.SavePath, "pvpmodifier.json");
         public static string LogPath = Path.Combine(TShock.SavePath, "pvplog.txt");
@@ -13,7 +14,7 @@ namespace PvPModifier {
         public bool EnableKnockback { get; set; }
 
         public bool EnableHoming { get; set; }
-        
+
         public bool EnableSpectreMask { get; set; }
 
         public bool EnableTurtle { get; set; }
@@ -25,7 +26,7 @@ namespace PvPModifier {
 
         public bool EnableFrost { get; set; }
         public double FrostDuration { get; set; }
-        
+
         public bool EnableBuffs { get; set; }
 
         public bool FirstConfigGeneration { get; set; } = true;

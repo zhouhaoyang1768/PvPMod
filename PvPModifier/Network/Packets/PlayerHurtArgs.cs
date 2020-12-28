@@ -1,11 +1,12 @@
-﻿using System;
+﻿using PvPModifier.Variables;
+using System;
 using System.IO;
 using System.IO.Streams;
-using PvPModifier.Variables;
 using Terraria.DataStructures;
 using TerrariaApi.Server;
 
 namespace PvPModifier.Network.Packets {
+
     public class PlayerHurtArgs : EventArgs {
         public GetDataEventArgs Args { get; set; }
 
@@ -27,7 +28,7 @@ namespace PvPModifier.Network.Packets {
             int targetId = data.ReadByte();
             var playerHitReason = PlayerDeathReason.FromReader(new BinaryReader(data));
             PvPPlayer target;
-            
+
             if (targetId > -1) {
                 target = PvPModifier.PvPers[targetId];
                 if (target == null || !target.ConnectionAlive || !target.Active) {
@@ -40,7 +41,7 @@ namespace PvPModifier.Network.Packets {
             } else {
                 return false;
             }
-            
+
             var projectile = playerHitReason._sourceProjectileIndex == -1
                 ? null
                 : attacker.ProjTracker.Projectiles[(int)playerHitReason.SourceProjectileType];
@@ -48,7 +49,7 @@ namespace PvPModifier.Network.Packets {
             target.LastHitBy = attacker;
             target.LastHitWeapon = Weapon;
             target.LastHitProjectile = Projectile;
-            
+
             arg = new PlayerHurtArgs {
                 Args = args,
                 Attacker = attacker,

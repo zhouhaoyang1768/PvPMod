@@ -1,6 +1,7 @@
 ﻿using PvPModifier.Utilities;
 
 namespace PvPModifier.DataStorage {
+
     /// <summary>
     /// Base class for all database items
     /// </summary>
@@ -19,7 +20,7 @@ namespace PvPModifier.DataStorage {
                 Database.Update(Section, ID, param, value);
                 return true;
             }
-            
+
             return false;
         }
     }

@@ -1,20 +1,28 @@
-﻿using System;
-using System.IO;
-using PvPModifier.Network.Packets;
+﻿using PvPModifier.Network.Packets;
 using PvPModifier.Variables;
+using System;
+using System.IO;
 using TerrariaApi.Server;
 
 namespace PvPModifier.Network {
+
     /// <summary>
     /// Creates hooks for plugins to use.
     /// </summary>
     public class DataHandler {
+
         public static event EventHandler<PlayerHurtArgs> PlayerHurt;
+
         public static event EventHandler<PlayerUpdateArgs> PlayerUpdate;
+
         public static event EventHandler<ProjectileNewArgs> ProjectileNew;
+
         public static event EventHandler<ProjectileDestroyArgs> ProjectileDestroyed;
+
         public static event EventHandler<PlayerDeathArgs> PlayerDeath;
+
         public static event EventHandler<TogglePvPArgs> PvPToggled;
+
         public static event EventHandler<PlayerSlotArgs> SlotUpdate;
 
         public static void HandleData(GetDataEventArgs args, MemoryStream data, PvPPlayer player) {
