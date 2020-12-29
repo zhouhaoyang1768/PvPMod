@@ -1,4 +1,5 @@
 ﻿using PvPModifier.DataStorage;
+using PvPModifier.Discord;
 using PvPModifier.Network;
 using PvPModifier.Variables;
 using System;
@@ -24,10 +25,12 @@ namespace PvPModifier {
 
         public static PvPPlayer[] ActivePlayers => PvPers.Where(c => c != null).ToArray();
 
+        public static Webhook DiscordLog { get; private set; }
+
         public PvPModifier(Main game) : base(game) {
         }
 
-        public override void Initialize() {
+        public override async void Initialize() {
             Config = Config.Read(Config.ConfigPath);
             if (!File.Exists(Config.ConfigPath)) {
                 Config.Write(Config.ConfigPath);
@@ -47,6 +50,9 @@ namespace PvPModifier {
             PlayerHooks.PlayerPostLogin += OnPlayerPostLogin;
 
             PluginCommands.RegisterCommands();
+
+            DiscordLog = new Webhook();
+            await DiscordLog.RunAsync();
         }
 
         protected override void Dispose(bool disposing) {
@@ -65,6 +71,8 @@ namespace PvPModifier {
                 _pvpevents.Unsubscribe();
 
                 Config.Write(Config.ConfigPath);
+
+                DiscordLog.Shutdown();
             }
             base.Dispose(disposing);
         }

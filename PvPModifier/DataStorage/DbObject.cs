@@ -23,5 +23,20 @@ namespace PvPModifier.DataStorage {
 
             return false;
         }
+
+        /// <summary>
+        /// Gets a string of any property in the class that inherits <see cref="DbObject"/>
+        /// </summary>
+        /// <param name="propertyName">The name of the property</param>
+        /// <returns>A string of the value of the property</returns>
+        public string GetValueWithString(string propertyName) {
+            try {
+                var property = GetType().GetProperty(propertyName);
+                if (property == null) return string.Empty;
+                return property.GetValue(this).ToString();
+            } catch {
+                return string.Empty;
+            }
+        }
     }
 }
