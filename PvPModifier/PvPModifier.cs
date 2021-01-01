@@ -25,12 +25,12 @@ namespace PvPModifier {
 
         public static PvPPlayer[] ActivePlayers => PvPers.Where(c => c != null).ToArray();
 
-        public static Webhook DiscordLog { get; private set; }
+        public static Webhook Webhook;
 
         public PvPModifier(Main game) : base(game) {
         }
 
-        public override async void Initialize() {
+        public override void Initialize() {
             Config = Config.Read(Config.ConfigPath);
             if (!File.Exists(Config.ConfigPath)) {
                 Config.Write(Config.ConfigPath);
@@ -50,9 +50,6 @@ namespace PvPModifier {
             PlayerHooks.PlayerPostLogin += OnPlayerPostLogin;
 
             PluginCommands.RegisterCommands();
-
-            DiscordLog = new Webhook();
-            await DiscordLog.RunAsync();
         }
 
         protected override void Dispose(bool disposing) {
@@ -71,8 +68,6 @@ namespace PvPModifier {
                 _pvpevents.Unsubscribe();
 
                 Config.Write(Config.ConfigPath);
-
-                DiscordLog.Shutdown();
             }
             base.Dispose(disposing);
         }
@@ -108,7 +103,7 @@ namespace PvPModifier {
         /// <summary>
         /// Sets default config values if a config doesn't exist
         /// after the server has loaded the game.
-        /// Also loads the database.
+        /// Also loads the database and webhook client.
         /// </summary>
         private void OnGamePostInitialize(EventArgs args) {
             if (Config.SetDefaultValues()) {
@@ -116,6 +111,7 @@ namespace PvPModifier {
             }
             Config.Write(Config.ConfigPath);
             Database.LoadDatabase();
+            Webhook = new Webhook();
         }
 
         /// <summary>

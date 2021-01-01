@@ -30,9 +30,8 @@ namespace PvPModifier {
         public bool EnableBuffs { get; set; }
 
         public bool EnableDiscordWebhook { get; set; }
-        public ulong DiscordID { get; set; }
-        public string DiscordToken { get; set; }
-        public string DiscordColor { get; set; }
+        public ulong DiscordWebhookID { get; set; }
+        public string DiscordWebhoookToken { get; set; }
 
         public bool FirstConfigGeneration { get; set; } = true;
 
@@ -80,9 +79,8 @@ namespace PvPModifier {
                 EnableBuffs = true;
 
                 EnableDiscordWebhook = false;
-                DiscordID = 0;
-                DiscordToken = "Insert token here.";
-                DiscordColor = "Hexadecimal color here.";
+                DiscordWebhookID = 0;
+                DiscordWebhoookToken = "";
 
                 FirstConfigGeneration = false;
                 return true;

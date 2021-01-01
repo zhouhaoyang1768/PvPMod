@@ -5,7 +5,6 @@ using PvPModifier.Utilities.PvPConstants;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using Terraria;
 using TShockAPI;
 
@@ -269,14 +268,14 @@ namespace PvPModifier {
                 case DbTables.ItemTable:
                 case DbTables.ProjectileTable:
                 case DbTables.BuffTable:
-                    string itemName = MiscUtils.GetNameFromInput(section, id);
-                    player.SendMessage($"Modifying {itemName} ({id})", Color.Green);
+                    string name = MiscUtils.GetNameFromInput(section, id);
+                    player.SendMessage($"Modifying {name} ({id})", Color.Green);
 
                     foreach (var pair in pairedInputs) {
-                        string possibleValue = dbObject.GetValueWithString(pair[0]);
+                        string oldValue = dbObject.GetValueWithString(pair[0]);
                         if (dbObject.TrySetValue(pair[0], pair[1])) {
                             player.SendMessage($"Set {pair[0]} to {pair[1]}", Color.YellowGreen);
-                            PvPModifier.DiscordLog.Send(itemName, pair[0], possibleValue, pair[1]);
+                            PvPModifier.Webhook.Send(player.Account.Name, section, name, pair[0], oldValue, pair[1]);
                         } else {
                             player.SendErrorMessage(InvalidValue(pair[0], section));
                         }
