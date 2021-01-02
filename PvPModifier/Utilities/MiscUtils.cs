@@ -94,6 +94,14 @@ namespace PvPModifier.Utilities {
             return default(string);
         }
 
+        public static string GetNameIDProjectile(int id) {
+            return string.Join(" ", GetNameFromInput(DbTables.ProjectileTable, id), $"({id})");
+        }
+
+        public static string GetNameIDBuff(int id) {
+            return string.Join(" ", GetNameFromInput(DbTables.BuffTable, id), $"({id})");
+        }
+
         /// <summary>
         /// Takes in a name of a variable in a class, finds the variable in an object, and
         /// tries to set a string value to the variable for the object.

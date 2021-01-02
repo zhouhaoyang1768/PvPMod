@@ -272,10 +272,11 @@ namespace PvPModifier {
                     player.SendMessage($"Modifying {name} ({id})", Color.Green);
 
                     foreach (var pair in pairedInputs) {
-                        string oldValue = dbObject.GetValueWithString(pair[0]);
                         if (dbObject.TrySetValue(pair[0], pair[1])) {
                             player.SendMessage($"Set {pair[0]} to {pair[1]}", Color.YellowGreen);
-                            PvPModifier.Webhook.Send(player.Account.Name, section, name, pair[0], oldValue, pair[1]);
+                            if (args.Silent) {
+                                PvPModifier.Webhook.Send(player.Account.Name, section, name, pair[0], pair[1]);
+                            }
                         } else {
                             player.SendErrorMessage(InvalidValue(pair[0], section));
                         }

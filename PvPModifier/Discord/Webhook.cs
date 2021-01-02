@@ -16,7 +16,7 @@ namespace PvPModifier.Discord {
             _client = new DiscordWebhookClient(PvPModifier.Config.DiscordWebhookID, PvPModifier.Config.DiscordWebhoookToken);
         }
 
-        public void Send(string user, string type, string item, string attribute, string oldValue, string value) {
+        public void Send(string user, string type, string item, string attribute, string value) {
             if (!PvPModifier.Config.EnableDiscordWebhook) {
                 return;
             }
@@ -34,12 +34,15 @@ namespace PvPModifier.Discord {
                 Footer = ef
             };
 
-            if (attribute.Equals(DbConsts.Shoot)) {
-                oldValue = string.Join(" ", MiscUtils.GetNameFromInput(DbTables.ProjectileTable, int.Parse(oldValue)), $"({oldValue})");
-                value = string.Join(" ", MiscUtils.GetNameFromInput(DbTables.ProjectileTable, int.Parse(value)), $"({value})");
+            if (attribute.Equals(DbConsts.Shoot) || attribute.Equals(DbConsts.UseAmmoIdentifier)) {
+                value = MiscUtils.GetNameIDProjectile(int.Parse(value));
+            } else if (attribute.Equals(DbConsts.InflictBuffID) || attribute.Equals(DbConsts.ReceiveBuffID)) {
+                value = MiscUtils.GetNameIDBuff(int.Parse(value));
+            } else if (attribute.Equals(DbConsts.NotAmmo)) {
+                value = attribute.Equals("0") ? "True" : "False";
             }
 
-            eb.AddField(item, $"Changed {attribute} from {oldValue} to {value}");
+            eb.AddField(item, $"Changed {attribute} to {value}");
 
             Embed[] embedArray = new Embed[] { eb.Build() };
 
